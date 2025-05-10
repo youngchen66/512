@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>英語句型拼拼樂</title>
+  <title>英語句型拼拼看</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -57,7 +57,7 @@
   </style>
 </head>
 <body>
-  <h1>英語句型拼拼樂</h1>
+  <h1>英語句型拼拼看</h1>
   <h3 id="question-counter"></h3>
   <div id="sentence-box" class="sentence-box"></div>
   <div id="word-bank" class="sentence-box"></div>
@@ -70,65 +70,16 @@
   <script>
     // 題庫：共60題（範例保留原始部分，請補充您自己的題目至60）
     const questions = [
-      { sentence: ["The boy is playing soccer in the park"], translation: "這個男孩正在公園踢足球。", image: "boy_soccer.png" },
-      { sentence: ["She is reading a book at school"], translation: "她正在學校讀書。", image: "girl_reading.png" },
+      { sentence: "The boy is playing soccer in the park.", translation: "這個男孩正在公園踢足球。", image: "boy_soccer.png" },
+      { sentence: "She is reading a book at school.", translation: "她正在學校讀書。", image: "girl_reading.png" },
       { sentence: ["The", "cat", "is", "on", "the", "roof"], translation: "貓在屋頂上。", image: "cat_roof.png" },
       { sentence: ["We", "are", "having", "fun", "at", "the", "zoo"], translation: "我們在動物園玩得很開心。", image: "zoo_fun.png" },
       { sentence: ["Dad", "is", "cooking", "dinner", "in", "the", "kitchen"], translation: "爸爸正在廚房煮晚餐。", image: "dad_cooking.png" },
       { sentence: ["She", "likes", "to", "ride", "her", "bike", "every", "day"], translation: "她每天喜歡騎腳踏車。", image: "girl_bike.png" },
       { sentence: ["I", "saw", "a", "rainbow", "in", "the", "sky"], translation: "我看到天上有彩虹。", image: "rainbow.png" },
-      { sentence: [ "My cat is sleeping at home."], translation: "我的貓正在家裡睡覺。", image: "cat_sleeping.png" },
+      { sentence: "My cat is sleeping at home.", translation: "我的貓正在家裡睡覺。", image: "cat_sleeping.png" },
       { sentence: ["The", "bus", "comes", "to", "our", "school", "at", "eight", "o’clock"], translation: "公車八點到我們學校。", image: "images/q113.jpg" },
-      { sentence: ["The", "students", "are", "cleaning", "the", "classroom", "together", "this", "morning"], translation: "學生們今天早上一起打掃教室", image: "images/q101.jpg" },
-      { sentence: ["I", "am", "going", "to", "the", "zoo", "with", "my", "family", "tomorrow"], translation: "我明天要和家人去動物園",image: "images/q102.jpg" },
-      { sentence: ["She", "is", "wearing", "a", "beautiful", "red", "dress", "for", "the", "party"],translation: "她為派對穿了一件漂亮的紅洋裝", image: "images/q103.jpg" },
-      { sentence: ["My", "brother", "and", "I", "like", "to", "play", "basketball", "after", "school"], translation: "我和哥哥放學後喜歡打籃球", image: "images/q104.jpg" },
-      { sentence: ["The", "cat", "is", "sleeping", "under", "the", "table", "in", "the", "kitchen"],translation: "貓正在廚房的桌子下睡覺", image: "images/q105.jpg" },
-      { sentence: ["We", "are", "going", "on", "a", "picnic", "at", "the", "park", "today"],translation: "我們今天要去公園野餐", image: "images/q106.jpg" },
-      { sentence: ["My", "mom", "cooked", "a", "delicious", "dinner", "for", "the", "whole", "family"], translation: "我媽媽為全家煮了一頓好吃的晚餐", image: "images/q107.jpg" },
-      { sentence: ["The", "children", "are", "singing", "songs", "on", "the", "school", "stage", "now"], translation: "孩子們現在正在學校舞台上唱歌", image: "images/q108.jpg" },
-      { sentence: ["I", "have", "to", "finish", "my", "homework", "before", "I", "can", "watch", "TV"],translation: "我必須先做完功課才能看電視",image: "images/q109.jpg" },
-      { sentence: ["They", "are", "drawing", "pictures", "of", "animals", "in", "the", "art", "class"], translation: "他們在美術課畫動物的圖畫", image: "images/q110.jpg" },
-      { sentence: ["Dad", "and", "I", "go", "to", "the", "supermarket", "every", "Saturday"],translation: "我和爸爸每週六去超市", image: "images/q111.jpg" },
-      { sentence: ["She", "practices", "the", "piano", "every", "day", "after", "dinner"], translation: "她每天晚餐後練鋼琴", image: "images/q112.jpg" },
-      { sentence: ["The", "bus", "comes", "to", "our", "school", "at", "eight", "o’clock"],translation: "公車八點到我們學校", image: "images/q113.jpg" },
-      { sentence: ["I", "see", "many", "ducks", "swimming", "in", "the", "pond"], translation: "我看到許多鴨子在池塘裡游泳",image: "images/q114.jpg" },
-      { sentence: ["She", "wants", "to", "become", "a", "doctor", "when", "she", "grows", "up"],translation: "她長大想當醫生", image: "images/q115.jpg" },
-      { sentence: ["The", "sun", "shines", "brightly", "in", "the", "blue", "sky"], translation: "太陽在藍天中閃耀", image: "images/q116.jpg" },
-      { sentence: ["We", "have", "a", "test", "in", "English", "class", "next", "week"],translation: "我們下週英文課有考試", image: "images/q117.jpg" },
-      { sentence: ["He", "helps", "his", "sister", "with", "her", "homework", "every", "evening"],translation: "他每天晚上幫妹妹寫功課", image: "images/q118.jpg" },
-      { sentence: ["Our", "teacher", "is", "reading", "a", "story", "to", "the", "class"], translation: "老師正在給班上讀故事", image: "images/q119.jpg" },
-      { sentence: ["I", "need", "to", "buy", "a", "new", "pencil", "and", "notebook"], translation: "我需要買新鉛筆和筆記本",image: "images/q120.jpg" },
-      { sentence: ["The", "birds", "are", "building", "a", "nest", "in", "the", "tree"],translation: "鳥兒正在樹上築巢",image: "images/q121.jpg" },
-      { sentence: ["She", "drinks", "a", "glass", "of", "milk", "every", "morning"], translation: "她每天早上喝一杯牛奶",image: "images/q122.jpg" },
-      { sentence: ["We", "watched", "a", "movie", "together", "last", "night"], translation: "我們昨晚一起看了電影", imageg: "images/q123.jpg" },
-      { sentence: ["He", "plays", "the", "guitar", "very", "well"], translation: "他吉他彈得很好", image: "images/q124.jpg" },
-      { sentence: ["My", "family", "went", "to", "the", "beach", "on", "Sunday"],translation: "我家週日去海邊了",image: "images/q125.jpg" },
-      { sentence: ["The", "flowers", "in", "the", "garden", "are", "beautiful"],translation: "花園裡的花很漂亮", image: "images/q126.jpg" },
-      { sentence: ["I", "have", "a", "pet", "dog", "named", "Bobby"], translation: "我有一隻叫 Bobby 的狗", image,: "images/q127.jpg" },
-      { sentence: ["She", "is", "studying", "for", "the", "math", "test"], translation: "她正在準備數學考試", image: "images/q128.jpg" },
-      { sentence: ["Let’s", "make", "cookies", "together", "this", "afternoon"], translation: "今天下午我們一起做餅乾吧", image: "images/q129.jpg" },
-      { sentence: ["The", "baby", "is", "sleeping", "in", "the", "crib"],translation: "嬰兒正在搖籃裡睡覺", image: "images/q130.jpg" },
-      { sentence: ["She", "found", "a", "coin", "on", "the", "floor"],translation: "她在地上撿到一枚硬幣", image: "images/q131.jpg" },
-      { sentence: ["They", "will", "visit", "grandma", "next", "weekend"], translation: "他們下週末會拜訪奶奶", image: "images/q132.jpg" },
-      { sentence: ["It", "is", "fun", "to", "play", "with", "friends"], translation: "和朋友玩很開心", image: "images/q133.jpg" },
-      { sentence: ["We", "read", "a", "book", "about", "dinosaurs"], translation: "我們讀了一本關於恐龍的書",image: "images/q134.jpg" },
-      { sentence: ["Dad", "is", "washing", "the", "car"],translation: "爸爸正在洗車", image: "images/q135.jpg" },
-      { sentence: ["The", "sky", "is", "full", "of", "stars"], translation: "天空佈滿星星", image: "images/q136.jpg" },
-      { sentence: ["He", "is", "drawing", "a", "picture", "of", "a", "cat"],translation: "他在畫一隻貓",image: "images/q137.jpg" },
-      { sentence: ["I", "ate", "a", "banana", "and", "an", "orange"],translation: "我吃了香蕉和橘子", image: "images/q138.jpg" },
-      { sentence: ["They", "are", "playing", "games", "on", "the", "computer"], translation: "他們在電腦上玩遊戲", image: "images/q139.jpg" },
-      { sentence: ["She", "is", "watering", "the", "plants", "in", "the", "garden"],translation: "她正在澆花園裡的植物", image: "images/q140.jpg" },
-      { sentence: ["We", "went", "hiking", "in", "the", "mountains"],translation: "我們去爬山了", image: "images/q141.jpg" },
-      { sentence: ["The", "teacher", "gave", "us", "homework", "today"], translation: "老師今天給我們作業", image: "images/q142.jpg" },
-      { sentence: ["Mom", "baked", "a", "cake", "for", "my", "birthday"],translation: "媽媽為我生日烤蛋糕", image: "images/q143.jpg" },
-      { sentence: ["He", "is", "washing", "his", "hands", "before", "lunch"], translation: "他午餐前在洗手", image: "images/q144.jpg" },
-      { sentence: ["I", "put", "my", "toys", "back", "in", "the", "box"], translation: "我把玩具放回盒子裡", image: "images/q145.jpg" },
-      { sentence: ["We", "are", "waiting", "for", "the", "bus"],translation: "我們在等公車", image: "images/q146.jpg" },
-      { sentence: ["She", "found", "a", "pretty", "shell", "on", "the", "beach"], translation: "她在海灘上撿到漂亮的貝殼", image: "images/q147.jpg" },
-      { sentence: ["The", "mouse", "is", "hiding", "behind", "the", "box"], translation: "老鼠躲在盒子後面", image: "images/q148.jpg" },
-      { sentence: ["I", "am", "reading", "a", "funny", "story", "book"], translation: "我在讀一本有趣的故事書", image: "images/q149.jpg" },
-// 🔼 再加入你已有的原始題目，最多擴增至60題 🔽
+      // 🔼 再加入你已有的原始題目，最多擴增至60題 🔽
       // ...
     ];
 
