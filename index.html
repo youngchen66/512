@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>英語句型拼拼看</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    .sentence-box {
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #fff;
+      border: 2px dashed #ccc;
+      min-height: 60px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .word {
+      background-color: #e6f7ff;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: grab;
+      user-select: none;
+      font-size: 18px;
+    }
+    .word.dragging {
+      opacity: 0.5;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    #translation {
+      margin-top: 10px;
+      color: #555;
+    }
+    #image {
+      margin-top: 20px;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <h1>英語句型拼拼看</h1>
+  <h3 id="question-counter"></h3>
+  <div id="sentence-box" class="sentence-box"></div>
+  <div id="word-bank" class="sentence-box"></div>
+  <button onclick="checkSentence()">確認句子</button>
+  <button onclick="loadNextQuestion()">下一題</button>
+  <div id="result"></div>
+  <div id="translation"></div>
+  <img id="image" src="" alt="" />
+
+  <script>
+    // 題庫：共60題（範例保留原始部分，請補充您自己的題目至60）
+    const questions = [
+      { sentence: "The boy is playing soccer in the park.", translation: "這個男孩正在公園踢足球。", image: "boy_soccer.png" },
+      { sentence: "She is reading a book at school.", translation: "她正在學校讀書。", image: "girl_reading.png" },
+      { sentence: ["The", "cat", "is", "on", "the", "roof"], translation: "貓在屋頂上。", image: "cat_roof.png" },
+      { sentence: ["We", "are", "having", "fun", "at", "the", "zoo"], translation: "我們在動物園玩得很開心。", image: "zoo_fun.png" },
+      { sentence: ["Dad", "is", "cooking", "dinner", "in", "the", "kitchen"], translation: "爸爸正在廚房煮晚餐。", image: "dad_cooking.png" },
+      { sentence: ["She", "likes", "to", "ride", "her", "bike", "every", "day"], translation: "她每天喜歡騎腳踏車。", image: "girl_bike.png" },
+      { sentence: ["I", "saw", "a", "rainbow", "in", "the", "sky"], translation: "我看到天上有彩虹。", image: "rainbow.png" },
+      { sentence: "My cat is sleeping at home.", translation: "我的貓正在家裡睡覺。", image: "cat_sleeping.png" },
+      { sentence: ["The", "bus", "comes", "to", "our", "school", "at", "eight", "o’clock"], translation: "公車八點到我們學校。", image: "images/q113.jpg" },
+      // 🔼 再加入你已有的原始題目，最多擴增至60題 🔽
+      // ...
+    ];
+
+    let currentQuestionIndex = 0;
+
+    const sentenceBox = document.getElementById('sentence-box');
+    const wordBank = document.getElementById('word-bank');
+    const result = document.getElementById('result');
+    const translation = document.getElementById('translation');
+    const counter = document.getElementById('question-counter');
+    const image = document.getElementById('image');
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function createWordElement(word) {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = word;
+      span.draggable = true;
+
+      span.addEventListener('dragstart', e => {
+        span.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', word);
+      });
+
+      span.addEventListener('dragend', () => {
+        span.classList.remove('dragging');
+      });
+
+      return span;
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      const dragging = document.querySelector('.word.dragging');
+      if (dragging && !sentenceBox.contains(dragging)) {
+        sentenceBox.appendChild(dragging);
+      }
+    }
+
+    sentenceBox.addEventListener('dragover', e => e.preventDefault());
+    sentenceBox.addEventListener('drop', handleDrop);
+
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function loadQuestion(index) {
+      sentenceBox.innerHTML = '';
+      wordBank.innerHTML = '';
+      result.textContent = '';
+      const question = questions[index];
+      translation.textContent = question.translation;
+      image.src = question.image || '';
+      image.alt = question.translation;
+
+      const words = Array.isArray(question.sentence)
+        ? [...question.sentence]
+        : question.sentence.split(' ');
+
+      shuffle(words);
+      words.forEach(word => wordBank.appendChild(createWordElement(word)));
+
+      const questionNum = index + 1;
+      counter.textContent = `第 ${questionNum} 題 / 共 ${questions.length} 題`;
+
+      const speech = Array.isArray(question.sentence)
+        ? question.sentence.join(' ')
+        : question.sentence;
+      speak(speech);
+    }
+
+    function checkSentence() {
+      const userSentence = Array.from(sentenceBox.children).map(el => el.textContent);
+      const correct = questions[currentQuestionIndex].sentence;
+      const correctArray = Array.isArray(correct) ? correct : correct.split(' ');
+
+      if (JSON.stringify(userSentence) === JSON.stringify(correctArray)) {
+        result.textContent = '🎉 答對了！';
+        result.style.color = 'green';
+      } else {
+        result.textContent = '❌ 答錯了，請再試一次。';
+        result.style.color = 'red';
+      }
+    }
+
+    function loadNextQuestion() {
+      currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+      loadQuestion(currentQuestionIndex);
+    }
+
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>
